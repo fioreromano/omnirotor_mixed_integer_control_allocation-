@@ -1,0 +1,12 @@
+# pkg-config file for uninstalled phynt interface and codels library
+#
+prefix=@abs_top_builddir@
+libdir=${prefix}/codels
+includedir=${prefix}/codels
+
+Name: phynt-genom3
+Description: phynt interface and codels library
+Version: @PACKAGE_VERSION@
+Requires: @requires_SPEC@
+Libs: ${libdir}/libphynt_codels.la
+Libs.private: @codels_requires_LIBS@
