@@ -1,0 +1,206 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="mrsim-omnimorph" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="the_radius" value="0.1" />
+    <xacro:property name="abc" value="0.1062" />
+
+    <link name="base">
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.0116</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.0113</iyy><iyz>0</iyz>
+          <izz>0.0113</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="base">
+        <geometry>
+          <sphere><radius>0.05</radius></sphere>
+        </geometry>
+      </collision>
+      <!-- three spheres to make contact stable -->
+      <collision name="land_1">
+        <pose>0.5 0 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+      <collision name="land_2">
+        <pose>0.0 0.5 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+      <collision name="land_3">
+        <pose>-0.5 0 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+      <collision name="land_4">
+        <pose>0 -0.5 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+
+      <visual name="body">
+        <geometry>
+          <sphere><radius>0.025</radius></sphere>
+        </geometry>
+        <material>
+          <ambient>1.0 0.6 0.4 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+
+      <visual name="arm-1">
+        <pose>0.05 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>1.0 0.4 0.4 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <visual name="arm-2">
+        <pose>0 0.05 0 0 1.5708 1.5708</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>0.6 0.6 0.6 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <visual name="arm-3">
+        <pose>-0.05 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>0.6 0.6 0.6 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <visual name="arm-4">
+        <pose>0 -0.05 0 1.5708 1.5708</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>0.6 0.6 0.6 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-1</name>
+      <pose>${abc} ${abc} ${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-1" type="revolute">
+      <parent>base</parent>
+      <child>rotor-1::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-2</name>
+      <pose>-${abc} ${abc} ${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-2" type="revolute">
+      <parent>base</parent>
+      <child>rotor-2::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-3</name>
+      <pose>-${abc} -${abc} ${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-3" type="revolute">
+      <parent>base</parent>
+      <child>rotor-3::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-4</name>
+      <pose>${abc} -${abc} ${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-4" type="revolute">
+      <parent>base</parent>
+      <child>rotor-4::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-5</name>
+      <pose>${abc} ${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-5" type="revolute">
+      <parent>base</parent>
+      <child>rotor-5::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-6</name>
+      <pose>-${abc} ${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-6" type="revolute">
+      <parent>base</parent>
+      <child>rotor-6::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-7</name>
+      <pose>-${abc} -${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-7" type="revolute">
+      <parent>base</parent>
+      <child>rotor-7::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-8</name>
+      <pose>${abc} -${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="rotor-8" type="revolute">
+      <parent>base</parent>
+      <child>rotor-8::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <plugin name="mrsim" filename="mrsim-gazebo.so">
+      <link>base</link>
+
+      <rotors>
+        <noise>0.03</noise>
+        <cf>1.8638e-4</cf>
+        <ct>2.7540e-6</ct>
+        <rotor><joint spin="cw">rotor-1</joint></rotor>
+        <rotor><joint spin="cw">rotor-2</joint></rotor>
+        <rotor><joint spin="cw">rotor-3</joint></rotor>
+        <rotor><joint spin="cw">rotor-4</joint></rotor>
+        <rotor><joint spin="ccw">rotor-5</joint></rotor>
+        <rotor><joint spin="ccw">rotor-6</joint></rotor>
+        <rotor><joint spin="ccw">rotor-7</joint></rotor>
+        <rotor><joint spin="ccw">rotor-8</joint></rotor>
+      </rotors>
+    </plugin>
+</model>
+</sdf>
