@@ -1,0 +1,153 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="dxsim-one">
+    <link name="arm_base">
+      <inertial>
+        <pose>0 0 0.00099 0 0 0</pose>
+        <inertia>
+          <ixx>1.11</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>100.11</iyy>
+          <iyz>0</iyz>
+          <izz>1.01</izz>
+        </inertia>
+        <mass>101.0</mass>
+      </inertial>
+      <collision name="arm_base_geom">
+        <pose>0 0 0.05 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.0 1.0 0.1</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="arm_base_geom_visual">
+        <pose>0 0 0.05 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.0 1.0 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.2 0.2 0.8 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <collision name="arm_base_geom_arm_trunk">
+        <pose>0 0 0.6 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>1.0</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="arm_base_geom_arm_trunk_visual">
+        <pose>0 0 0.6 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>1.0</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.8 0.2 0.2 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    </link>
+    <link name="arm_shoulder_pan">
+      <pose>0 0 1.1 0 0 0</pose>
+      <inertial>
+        <pose>0.045455 0 0 0 0 0</pose>
+        <inertia>
+          <ixx>0.011</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0225</iyy>
+          <iyz>0</iyz>
+          <izz>0.0135</izz>
+        </inertia>
+        <mass>1.1</mass>
+      </inertial>
+      <collision name="arm_shoulder_pan_geom">
+        <pose>0 0 0.05 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.1</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="arm_shoulder_pan_geom_visual">
+        <pose>0 0 0.05 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.1</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.8 0.8 0.2 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <collision name="arm_shoulder_pan_geom_arm_shoulder">
+        <pose>0.55 0 0.05 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.0 0.05 0.1</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="arm_shoulder_pan_geom_arm_shoulder_visual">
+        <pose>0.55 0 0.05 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.0 0.05 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.8 0.8 0.2 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="arm_shoulder_pan_joint" type="revolute">
+      <parent>arm_base</parent>
+      <child>arm_shoulder_pan</child>
+      <axis>
+        <dynamics>
+          <damping>1.000000</damping>
+          <friction>0.000000</friction>
+        </dynamics>
+        <xyz>0 0 1</xyz>
+        <use_parent_model_frame>true</use_parent_model_frame>
+      </axis>
+    </joint>
+
+    <joint name="arm_base_joint" type="fixed">
+      <parent>world</parent>
+      <child>arm_base</child>
+    </joint>
+
+    <plugin name="dxsim" filename="dxsim-gazebo.so">
+      <pty>/tmp/pty-dxsim-one</pty>
+      <period>1e-3</period>
+      <motors>
+        <motor>
+          <joint spin="ccw">arm_shoulder_pan_joint</joint>
+          <eeprom>/tmp/dxsim-one-id1</eeprom>
+          <model>MX64T</model>
+          <p0>0.0</p0>
+          <v0>0.0</v0>
+          <id>1</id>
+          <noise>0</noise>
+          <debug>0</debug>
+        </motor>
+      </motors>
+    </plugin>
+  </model>
+</sdf>

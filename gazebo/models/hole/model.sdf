@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="box_with_hole">
+    <static>true</static>
+
+    <!-- Visual of the box -->
+    <link name="box_link">
+      <visual name="box_visual">
+        <geometry>
+          <box>
+            <size>2 2 2</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.7 0.7 0.7 1</ambient>
+          <diffuse>0.7 0.7 0.7 1</diffuse>
+        </material>
+        \<pose>0 0 1 0 0 0</pose>
+      </visual>
+
+      <!-- Collision for the box excluding the hole -->
+      <collision name="box_bottom">
+        <geometry>
+          <box>
+            <size>2 2 0.975</size>
+          </box>
+        </geometry>
+        <pose>0 0 0.4875 0 0 0</pose>
+      </collision>
+      
+      <collision name="box_top">
+        <geometry>
+          <box>
+            <size>2 2 0.975</size>
+          </box>
+        </geometry>
+        <pose>0 0 1.5125 0 0 0</pose>
+      </collision>
+      
+      <collision name="box_sider">
+        <geometry>
+          <box>
+            <size>2 0.975 0.05</size>
+          </box>
+        </geometry>
+        <pose>0 0.515 1 0 0 0</pose>
+      </collision>
+      
+      <collision name="box_sidel">
+        <geometry>
+          <box>
+            <size>2 0.975 0.05</size>
+          </box>
+        </geometry>
+        <pose>0 -0.515 1 0 0 0</pose>
+      </collision>
+      
+      <collision name="box_mid">
+        <geometry>
+          <box>
+            <size>1.7 0.05 0.05</size>
+          </box>
+        </geometry>
+        <pose>0.15 0 1 0 0 0</pose>
+      </collision>
+       
+    </link>
+  </model>
+</sdf>
