@@ -1,0 +1,624 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="mrsim-omnimorph" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="the_radius" value="0.1" />
+    <xacro:property name="abc" value="0.1062" />
+    <xacro:property name="m_mass" value="0.0001" />
+    <xacro:property name="m_Ixx" value="0.0001" />
+    <xacro:property name="m_Iyy" value="0.0001" />
+    <xacro:property name="m_Izz" value="0.0001" />
+
+    <link name="base">
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.0116</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>0.0113</iyy><iyz>0</iyz>
+          <izz>0.0113</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="base">
+        <geometry>
+          <sphere><radius>0.05</radius></sphere>
+        </geometry>
+      </collision>
+      <!-- three spheres to make contact stable -->
+      <collision name="land_1">
+        <pose>0.5 0 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+      <collision name="land_2">
+        <pose>0.0 0.5 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+      <collision name="land_3">
+        <pose>-0.5 0 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+      <collision name="land_4">
+        <pose>0 -0.5 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere><radius>${the_radius}</radius></sphere>
+        </geometry>
+      </collision>
+      <!--
+      <visual name="body">
+        <geometry>
+          <sphere><radius>0.025</radius></sphere>
+        </geometry>
+        <material>
+          <ambient>1.0 0.6 0.4 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+
+      <visual name="arm-1">
+        <pose>0.05 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>1.0 0.4 0.4 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <visual name="arm-2">
+        <pose>0 0.05 0 0 1.5708 1.5708</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>0.6 0.6 0.6 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <visual name="arm-3">
+        <pose>-0.05 0 0 0 1.5708 0</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>0.6 0.6 0.6 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      <visual name="arm-4">
+        <pose>0 -0.05 0 1.5708 1.5708</pose>
+        <geometry>
+          <cylinder><radius>0.01</radius><length>0.1</length></cylinder>
+        </geometry>
+        <material>
+          <ambient>0.6 0.6 0.6 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+      -->
+      <visual name="main_frame">
+        <pose>0 0 0 0 0 0</pose>
+	<geometry>
+            <mesh>
+		<uri>model://mrsim-omnimorph/omnicopter_frame.stl</uri>
+         <scale>0.001 0.001 0.001 </scale>
+	    </mesh>
+	</geometry>
+        <material>
+          <ambient>0 0 0 0.8</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>  
+     </link>
+
+
+    <link name="m1">
+       <pose>${abc} ${abc} ${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial>
+      <visual name="motor">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+     <visual name="rot_axis">
+        <pose>0 0 0 0 0 1.5708</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>     
+    </link>
+   <link name="m2">
+       <pose>-${abc} ${abc} ${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial>
+      <visual name="motor">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    <visual name="rot_axis">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>        
+    </link>
+    <link name="m3">
+       <pose>-${abc} -${abc} ${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial>
+<visual name="motor">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    <visual name="rot_axis">
+        <pose>0 0 0 0 0 -1.5708</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>          
+    </link>
+    <link name="m4">
+       <pose>${abc} -${abc} ${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial>
+<visual name="motor">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    <visual name="rot_axis">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>            
+    </link>
+    <link name="m5">
+       <pose>${abc} ${abc} -${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial>
+<visual name="motor">
+        <pose>0 0 0 0 3.14159 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    <visual name="rot_axis">
+        <pose>0 0 0 0 0 1.5708</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>            
+    </link>
+    <link name="m6">
+       <pose>-${abc} ${abc} -${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial> 
+<visual name="motor">
+        <pose>0 0 0 0 3.14159 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    <visual name="rot_axis">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>      
+    </link>
+    <link name="m7">
+       <pose>-${abc} -${abc} -${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial>
+<visual name="motor">
+        <pose>0 0 0 0 3.14159 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    <visual name="rot_axis">
+        <pose>0 0 0 0 0 1.5708</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>       
+    </link>
+    <link name="m8">
+       <pose>${abc} -${abc} -${abc} 0 0 0 </pose>
+        <inertial>
+        <mass>${m_mass}</mass>
+        <inertia>
+          <ixx>${m_Ixx}</ixx><ixy>0</ixy><ixz>0</ixz>
+          <iyy>${m_Iyy}</iyy><iyz>0</iyz>
+          <izz>${m_Izz}</izz>
+        </inertia>
+      </inertial>
+<visual name="motor">
+        <pose>0 0 0 0 3.14159 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/brushless_motor_f40.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+       <material>
+          <ambient>76 6 6 0.65</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    <visual name="rot_axis">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+        <mesh>
+        <uri>model://mrsim-omnimorph/rotationaxis.stl</uri>
+        <scale>0.001 0.001 0.001 </scale>
+         </mesh>
+        </geometry>
+      </visual>       
+    </link>   
+
+    <joint name="jm-1" type="revolute">
+       <parent>base</parent> 
+       <child>m1</child> 
+       <axis>
+       <xyz>0 -1 0 </xyz> 
+       </axis>
+    </joint>
+    <joint name="jm-2" type="revolute">
+       <parent>base</parent> 
+       <child>m2</child> 
+       <axis>
+       <xyz>1 0 0 </xyz> 
+       </axis>
+    </joint>
+    <joint name="jm-3" type="revolute">
+       <parent>base</parent> 
+       <child>m3</child> 
+       <axis>
+       <xyz>0 1 0 </xyz> 
+       </axis>
+    </joint>
+    <joint name="jm-4" type="revolute">
+       <parent>base</parent> 
+       <child>m4</child> 
+       <axis>
+       <xyz>-1 0 0 </xyz> 
+       </axis>
+    </joint>
+    <joint name="jm-5" type="revolute">
+       <parent>base</parent> 
+       <child>m5</child> 
+       <axis>
+       <xyz>0 1 0 </xyz> 
+       </axis>
+    </joint>
+    <joint name="jm-6" type="revolute">
+       <parent>base</parent> 
+       <child>m6</child> 
+       <axis>
+       <xyz>-1 0 0 </xyz> 
+       </axis>
+    </joint>
+    <joint name="jm-7" type="revolute">
+       <parent>base</parent> 
+       <child>m7</child> 
+       <axis>
+       <xyz>0 -1 0 </xyz> 
+       </axis>
+    </joint>
+    <joint name="jm-8" type="revolute">
+       <parent>base</parent> 
+       <child>m8</child> 
+       <axis>
+       <xyz>1  0  0 </xyz> 
+       </axis>
+    </joint>
+
+    <include> <uri>model://mrsim-tiltrotor</uri> 
+      <name>rotor-1</name> 
+      <pose>${abc} ${abc} ${abc} 0 0 0 </pose> 
+    </include> 
+      <joint name="jrotor-1" type="revolute"> 
+      <parent>m1</parent> 
+      <child>rotor-1::propeller</child> 
+      <axis><xyz>0 0 1</xyz></axis> 
+     </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-2</name>
+      <pose>-${abc} ${abc} ${abc} 0 0 0</pose>
+    </include>
+    <joint name="jrotor-2" type="revolute">
+      <parent>m2</parent>
+      <child>rotor-2::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-3</name>
+      <pose>-${abc} -${abc} ${abc} 0 0 0</pose>
+    </include>
+    <joint name="jrotor-3" type="revolute">
+      <parent>m3</parent>
+      <child>rotor-3::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor</uri>
+      <name>rotor-4</name>
+      <pose>${abc} -${abc} ${abc} 0 0 0</pose>
+    </include>
+    <joint name="jrotor-4" type="revolute">
+      <parent>m4</parent>
+      <child>rotor-4::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor_l</uri>
+      <name>rotor-5</name>
+      <pose>${abc} ${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="jrotor-5" type="revolute">
+      <parent>m5</parent>
+      <child>rotor-5::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor_l</uri>
+      <name>rotor-6</name>
+      <pose>-${abc} ${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="jrotor-6" type="revolute">
+      <parent>m6</parent>
+      <child>rotor-6::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor_l</uri>
+      <name>rotor-7</name>
+      <pose>-${abc} -${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="jrotor-7" type="revolute">
+      <parent>m7</parent>
+      <child>rotor-7::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+
+    <include>
+      <uri>model://mrsim-tiltrotor_l</uri>
+      <name>rotor-8</name>
+      <pose>${abc} -${abc} -${abc} 0 0 0</pose>
+    </include>
+    <joint name="jrotor-8" type="revolute">
+      <parent>m8</parent>
+      <child>rotor-8::propeller</child>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+<!--
+    <plugin name="dynamixel_1" filename="dynamixel-gazebo.so">
+      <link>m1</link>
+      <motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id1</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-1</joint>
+      </motor>
+    </plugin>
+    <plugin name="dynamixel_2" filename="dynamixel-gazebo.so">
+      <link>m2</link>
+      <motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id2</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-2</joint>
+      </motor>
+    </plugin>
+
+    <plugin name="dynamixel_3" filename="dynamixel-gazebo.so">
+      <link>m3</link>
+      <motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id3</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-3</joint>
+      </motor>
+    </plugin>
+    <plugin name="dynamixel_4" filename="dynamixel-gazebo.so">
+      <link>m4</link>
+      <motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id4</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-4</joint>
+      </motor>
+    </plugin>
+    <plugin name="dynamixel_5" filename="dynamixel-gazebo.so">
+      <link>m5</link>
+      <motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id5</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-5</joint>
+      </motor>
+    </plugin>
+    <plugin name="dynamixel_6" filename="dynamixel-gazebo.so">
+      <link>m6</link>
+      <motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id6</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-6</joint>
+      </motor>
+    </plugin>
+    <plugin name="dynamixel_7" filename="dynamixel-gazebo.so">
+      <link>m7</link>
+      <motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id7</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-7</joint>
+      </motor>
+    </plugin>
+
+    <plugin name="dynamixel_8" filename="dynamixel-gazebo.so">
+        <link>m7</link>     
+ 	<motor>
+        <model>MX64T</model>
+        <eeprom>/mnt/Main/omnimorph/gazebo/eeprom/dx_eeprom_id8</eeprom>
+        <noise>0.03</noise>
+        <joint spin="ccw">jm-8</joint>
+      </motor>
+    </plugin>
+-->
+
+    <plugin name="mrsim" filename="mrsim-gazebo.so">
+      <link>base</link>
+      <rotors>
+        <!-- <noise>0.03</noise> -->
+        <cf>1.8638e-4</cf>
+        <ct>2.7540e-6</ct>
+	<!-- <b>1e-5</b> -->
+	<b>1e-5</b>
+        <I>40</I>
+        <rotor><joint spin="cw">jrotor-1</joint></rotor>
+        <rotor><joint spin="cw">jrotor-2</joint></rotor>
+        <rotor><joint spin="cw">jrotor-3</joint></rotor>
+        <rotor><joint spin="cw">jrotor-4</joint></rotor>
+        <rotor><joint spin="ccw">jrotor-5</joint></rotor>
+        <rotor><joint spin="ccw">jrotor-6</joint></rotor>
+        <rotor><joint spin="ccw">jrotor-7</joint></rotor>
+        <rotor><joint spin="ccw">jrotor-8</joint></rotor>
+      </rotors>
+    </plugin>
+</model>
+</sdf>
